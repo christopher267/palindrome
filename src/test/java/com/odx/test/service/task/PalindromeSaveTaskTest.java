@@ -57,4 +57,5 @@ public class PalindromeSaveTaskTest extends MockTestBase {
 		assertNotNull(capturedPalindrome);
 		assertNotNull(EXPECTED_NAME, capturedPalindrome.getName());
 	}
+
 }
