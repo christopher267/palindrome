@@ -17,9 +17,20 @@ public class PalindromeFindTaskTest extends MockTestBase {
 	private PalindromeFindTask task;
 	
 	@Test
-	public void testExecute_Success() throws Exception {
-		final String EXPECTED_PALINDROME = "kayAk";
+	public void testExecute_SuccessWord() throws Exception {
+		final String EXPECTED_PALINDROME = "KAYAK";
 		final String input = "Random sentence kayAk palindrome";
+		Palindrome palindrome = PalindromeTestHelper.getPalindrome(input);
+		palindrome = task.execute(palindrome);
+		assertNotNull(palindrome);
+		assertNotNull(palindrome.getName());
+		assertEquals(EXPECTED_PALINDROME, palindrome.getName());
+	}
+	
+	@Test
+	public void testExecute_SuccessSentence() throws Exception {
+		final String EXPECTED_PALINDROME = "MADAMIMADAM".toUpperCase();
+		final String input = "Random sentence Madam I'm Adam yes wowee";
 		Palindrome palindrome = PalindromeTestHelper.getPalindrome(input);
 		palindrome = task.execute(palindrome);
 		assertNotNull(palindrome);
@@ -36,5 +47,4 @@ public class PalindromeFindTaskTest extends MockTestBase {
 			fail("Empty name should not cause a failure.");
 		}
 	}
-
 }
