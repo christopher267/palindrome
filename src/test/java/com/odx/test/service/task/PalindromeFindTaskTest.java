@@ -2,7 +2,6 @@ package com.odx.test.service.task;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +17,7 @@ public class PalindromeFindTaskTest extends MockTestBase {
 	
 	@Test
 	public void testExecute_SuccessWord() throws Exception {
-		final String EXPECTED_PALINDROME = "KAYAK";
+		final String EXPECTED_PALINDROME = "kayAk";
 		final String input = "Random sentence kayAk palindrome";
 		Palindrome palindrome = PalindromeTestHelper.getPalindrome(input);
 		palindrome = task.execute(palindrome);
@@ -29,8 +28,19 @@ public class PalindromeFindTaskTest extends MockTestBase {
 	
 	@Test
 	public void testExecute_SuccessSentence() throws Exception {
-		final String EXPECTED_PALINDROME = "MADAMIMADAM".toUpperCase();
+		final String EXPECTED_PALINDROME = "Madam I'm Adam";
 		final String input = "Random sentence Madam I'm Adam yes wowee";
+		Palindrome palindrome = PalindromeTestHelper.getPalindrome(input);
+		palindrome = task.execute(palindrome);
+		assertNotNull(palindrome);
+		assertNotNull(palindrome.getName());
+		assertEquals(EXPECTED_PALINDROME, palindrome.getName());
+	}
+	
+	@Test
+	public void testExecute_SuccessSingleWord() throws Exception {
+		final String EXPECTED_PALINDROME = "wow";
+		final String input = "wow";
 		Palindrome palindrome = PalindromeTestHelper.getPalindrome(input);
 		palindrome = task.execute(palindrome);
 		assertNotNull(palindrome);
@@ -44,7 +54,7 @@ public class PalindromeFindTaskTest extends MockTestBase {
 		try {
 			task.execute(palindrome);
 		} catch(OdxException ex) {
-			fail("Empty name should not cause a failure.");
+			assertEquals(PalindromeFindTask.NO_PALINDROME_FOUND_ERROR_MESSAGE, ex.getMessage());
 		}
 	}
 }
